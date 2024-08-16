@@ -1,11 +1,8 @@
 'use client';
-import VideoPlayer from '@/components/home/VideoPlayer';
-
 import { IMG_BASE_URL } from '@/lib/api';
 import { Movie } from '@/lib/types';
 import { yearToMonth } from '@/lib/utils';
 import { useTypedSelector } from '@/redux/store';
-import Link from 'next/link';
 
 const MovieDetails = () => {
   const movie: Movie = useTypedSelector(({ movieState }) => movieState.movie);
