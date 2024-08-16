@@ -3,6 +3,7 @@ import { IMG_BASE_URL } from '@/lib/api';
 import { Movie } from '@/lib/types';
 import { yearToMonth } from '@/lib/utils';
 import { useTypedSelector } from '@/redux/store';
+import Image from 'next/image';
 
 const MovieDetails = () => {
   const movie: Movie = useTypedSelector(({ movieState }) => movieState.movie);
@@ -19,9 +20,11 @@ const MovieDetails = () => {
         <div className='px-2rem py-8'>
           <div className='flex flex-col lg:flex-row'>
             <div className='lg:w-1/5'>
-              <img
+              <Image
+                width={100}
                 src={`${IMG_BASE_URL}${movie.poster_path}`}
-                alt={movie.title}
+                alt={movie.title ? movie.title : 'none'}
+           height={100}
                 className='w-full h-auto rounded-lg shadow-lg'
               />
             </div>
@@ -29,7 +32,7 @@ const MovieDetails = () => {
               <h2 className='text-4xl font-bold'>{movie.title}</h2>
               <div className='text-white text-lg mb-2 flex items-center gap-4'>
                 <p> {yearToMonth(movie.release_date)} </p>
-                <div className=' flex gap-4'>
+                {/* <div className=' flex gap-4'>
                   {movie.genres?.map((gen: { name: string }) => (
                     <Link
                       key={gen.name}
@@ -41,7 +44,7 @@ const MovieDetails = () => {
                       {gen.name}
                     </Link>
                   ))}
-                </div>
+                </div> */}
               </div>
               <p className=' mb-4 opacity-90'>{movie.overview}</p>
               <div>
