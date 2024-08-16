@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: #1f232c;
+    --forground:rgba(0, 0, 0, 0.932);
+    --primary:white;
+    --tomato:#E64D25;
+  }
+
+
+  .dark {
+    --background: 0 0% 3.9%;
+  }
+}
+
+
+

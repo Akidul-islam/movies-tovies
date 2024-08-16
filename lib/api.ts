@@ -1,0 +1,43 @@
+import axios from 'axios';
+// env data
+const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+const IMG_BASE_URL = process.env.NEXT_PUBLIC_TMDB_IMAGE_URL;
+const ACCESS_TOKEN = process.env.NEXT_PUBLIC_TMDB_ACCESS_TOKEN;
+
+// TMDB ENDPOINT
+
+//
+const API = axios.create({
+  baseURL: BASE_URL,
+  headers: {
+    accept: 'application/json',
+    Authorization: `Bearer ${ACCESS_TOKEN}`,
+  },
+});
+
+const apiEndpoint = {
+  getMovieVideo: async (movie_id: number) => {
+    const { data } = await API.get(`${BASE_URL}/movie/${movie_id}/videos`);
+    const trailer = data.results.find((item: any) => item.type == 'Trailer');
+    return trailer;
+  },
+};
+
+const randomMovie = async () => {
+  const {
+    data: { results },
+  } = await API.get(`${BASE_URL}/movie/now_playing`);
+  // let index =Math.floor(Math.random() * results.length)
+  // setInterval(() => { index = Math.floor(Math.random() * results.length) }, 2000)
+  return results;
+};
+
+export {
+  randomMovie,
+  IMG_BASE_URL,
+  BASE_URL,
+  ACCESS_TOKEN,
+  API_KEY,
+  apiEndpoint,
+};
