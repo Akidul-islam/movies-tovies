@@ -14,6 +14,7 @@ interface Movie {
   overview?: string;
   release_date?: string;
   backdrop_path?: string;
+  vote_average?: number;
 }
 
 export type { Genres, MovieList, Movie };

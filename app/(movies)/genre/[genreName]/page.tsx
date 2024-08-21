@@ -39,25 +39,33 @@ const GenreWithMovie = ({
   return (
     <section className='my-4'>
       <div className=''>
-        <div className='flex items-center'>
-               {}
-          </div>
+        <div className='flex items-center'>{}</div>
       </div>
       <div className='px-2rem grid gap-8'>
         {genre?.name && <h1>{genre.name} Movies & Tv Series</h1>}
         {movies.length !== 0 && <p>Search Results {movies.length}</p>}
         <div className='flex flex-wrap  gap-[20px]'>
-          {movies.map(({ id, original_title, poster_path }: Movie) => (
-            <Link
-              href={`/watch-movie/${original_title}-${id}`}
-              key={`${original_title}-${id}`}
-            >
-              <MovieThumbail
-                title={original_title ? original_title : ''}
-                image={poster_path ? poster_path : ''}
-              />
-            </Link>
-          ))}
+          {movies.map(
+            ({
+              id,
+              original_title,
+              poster_path,
+              release_date,
+              vote_average,
+            }: Movie) => (
+              <Link
+                href={`/watch-movie/${original_title}-${id}`}
+                key={`${original_title}-${id}`}
+              >
+                <MovieThumbail
+                  title={original_title ? original_title : ''}
+                  image={poster_path ? poster_path : ''}
+                  release_date={`${release_date}`}
+                  vote_average={vote_average ? vote_average : 0}
+                />
+              </Link>
+            )
+          )}
         </div>
         {isFetching && <h1>loading for movie add more</h1>}
         {movies.length !== 0 && page < data.total_pages && (
