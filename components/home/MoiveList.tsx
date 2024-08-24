@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useRef, MutableRefObject } from 'react';
 import { Movie, MovieList } from '@/lib/types';
 import { useGetMoviesQuery } from '@/redux/api/moviesApi';
 import Link from 'next/link';
@@ -8,7 +8,23 @@ import { Button } from '../ui/button';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 
 const MoiveList: React.FC<MovieList> = ({ title, endpoint }) => {
+  const scrollX = useRef(null);
+  const clientWidth = useRef(null);
   const { data } = useGetMoviesQuery(endpoint);
+  const scrollRight = () => {
+    scrollX.current.scrollBy({
+      left: clientWidth.current.clientWidth * 5,
+      behavior: 'smooth',
+    });
+    // console.log();
+  };
+  const scrollleft = () => {
+    scrollX.current.scrollBy({
+      left: -clientWidth.current.clientWidth * 5,
+      behavior: 'smooth',
+    });
+  };
+
   return (
     <section className='px-8 py-8 flex flex-col gap-6'>
       <div className='flex justify-between items-center'>
@@ -22,8 +38,11 @@ const MoiveList: React.FC<MovieList> = ({ title, endpoint }) => {
           </button>
         </div>
       </div>
-      <div className='flex gap-2'>
-        <div className='flex gap-4 overflow-x-auto ' id='scrollbar-hide'>
+      <div className='flex lg:gap-8'>
+        <div
+          className='flex gap-4 overflow-x-auto scrollbar-thin scrollbar-none scrollbar-track-green-400'
+          ref={scrollX}
+        >
           {data &&
             data.results?.map(
               ({
@@ -33,22 +52,32 @@ const MoiveList: React.FC<MovieList> = ({ title, endpoint }) => {
                 release_date,
                 vote_average,
               }: Movie) => (
-                <Link href={`/watch-movie/${original_title}-${id}`} key={id}>
-                  <MovieThumbail
-                    title={`${original_title}`}
-                    image={poster_path ? poster_path : 'no-image'}
-                    release_date={release_date ? release_date : 'unkown'}
-                    vote_average={vote_average ? vote_average : 0}
-                  />
-                </Link>
+                <div key={id} ref={clientWidth}>
+                  <Link href={`/watch-movie/${original_title}-${id}`}>
+                    <MovieThumbail
+                      title={`${original_title}`}
+                      image={poster_path ? poster_path : 'no-image'}
+                      release_date={release_date ? release_date : 'unkown'}
+                      vote_average={vote_average ? vote_average : 0}
+                    />
+                  </Link>
+                </div>
               )
             )}
         </div>
-        <div className=' flex justify-center bg-primary-forground/90 flex-col'>
-          <Button variant={'outline'} className='h-[50%]'>
+        <div className='hidden lg:flex justify-between bg-primary-forground/90 flex-col'>
+          <Button
+            onClick={scrollRight}
+            variant={'outline'}
+            className='h-[45%] duration-200 ease-in shadow-md backdrop:blur-[4px] bg-red-50/10 border-0 bg-gradient-to-tr w-[50px]   hover:from-red-300/60 hover:to-cyan-500/40 '
+          >
             <ArrowRight />
           </Button>
-          <Button variant={'outline'}>
+          <Button
+            onClick={scrollleft}
+            variant={'outline'}
+            className='h-[45%] shadow-md backdrop:blur-[4px] bg-red-50/10 border-0 bg-gradient-to-tr w-[50px] duration-1000 ease-in   hover:from-red-300/60 hover:to-cyan-500/40 '
+          >
             <ArrowLeft />
           </Button>
         </div>
