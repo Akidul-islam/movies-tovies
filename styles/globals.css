@@ -5,11 +5,11 @@
 @layer base {
   :root {
     --background: #1f232c;
-    --forground:rgba(0, 0, 0, 0.932);
-    --primary:white;
-    --tomato:#E64D25;
+    --forground: rgba(0, 0, 0, 0.932);
+    --primary: white;
+    --tomato: #e64d25;
+    --outline: green;
   }
-
 
   .dark {
     --background: 0 0% 3.9%;
