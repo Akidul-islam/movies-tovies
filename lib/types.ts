@@ -4,7 +4,7 @@ interface Genres {
 }
 interface MovieList {
   title: string;
-  endpoint: string;
+  url: string;
 }
 interface Movie {
   id?: number;
