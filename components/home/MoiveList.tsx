@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState, useRef } from "react";
 import { Movie, MovieList } from "@/lib/types";
 import { useGetMoviesQuery } from "@/redux/api/moviesApi";
 import Link from "next/link";
@@ -130,24 +130,6 @@ const MoiveList: React.FC<MovieList> = ({ title, url }) => {
             className="h-[45%] shadow-md backdrop:blur-[4px] bg-red-50/10 border-0 bg-gradient-to-tr w-[50px] duration-1000 ease-in   hover:from-red-300/60 hover:to-cyan-500/40 "
           >
             <ArrowLeft />
-          </Button>
-        </div>
-      </div>
-      <div className="flex items-center gap-4">
-        <div className="flex items-center gap-4">
-          <Avatar>
-            <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
-          <p className="w-[130px] text-md font-medium font-poppins">
-            <span className="text-green-200/90">Share NETFLIX</span> to your
-            friends
-          </p>
-        </div>
-        <div className="flex items-center justify-between">
-          <Button className="flex w-[120px] bg-teal-600 font-md font-medium items-center gap-4">
-            <Navigation size={18} color="#ffffff" />
-            Shared
           </Button>
         </div>
       </div>
