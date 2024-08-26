@@ -1,8 +1,8 @@
 // Or from '@reduxjs/toolkit/query/react'
-import { apiEndpoint } from '@/lib/api';
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { getGenre, getMovie, getMovies } from '../features/movieSlice';
-import { buildQueryString } from '@/lib/utils';
+import { apiEndpoint } from "@/lib/api";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { getGenre, getMovie, getMovies } from "../features/movieSlice";
+import { buildQueryString } from "@/lib/utils";
 // envorment variable
 const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -12,6 +12,13 @@ const moviesApi = createApi({
   reducerPath: 'moviesApi',
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
+    prepareHeaders: (headers) => {
+      const token = process.env.NEXT_PUBLIC_TMDB_ACCESS_TOKEN;
+      if (!headers.has('Authorization') && token) {
+        headers.set('Authorization', `Bearer ${token}`);
+      }
+      return headers;
+    },
   }),
   tagTypes: ['moviesApi'],
   endpoints: (build) => ({
@@ -31,7 +38,7 @@ const moviesApi = createApi({
     }),
 
     getMovies: build.query({
-      query: (endpoint) => `movie/${endpoint}?api_key=${API_KEY}`,
+      query: (url) => url,
     }),
 
     getMovie: build.query({

@@ -4,11 +4,14 @@ interface Genres {
 }
 interface MovieList {
   title: string;
-  endpoint: string;
+  url: string;
 }
 interface Movie {
   id?: number;
   original_title?: string;
+  name?: string;
+  first_air_date?: string;
+  media_type?: string;
   poster_path?: string;
   title?: string | undefined;
   overview?: string;
@@ -16,5 +19,6 @@ interface Movie {
   backdrop_path?: string;
   vote_average?: number;
 }
+
 
 export type { Genres, MovieList, Movie };

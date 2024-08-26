@@ -22,6 +22,12 @@ const apiEndpoint = {
     const trailer = data.results.find((item: any) => item.type == 'Trailer');
     return trailer;
   },
+  getTv: async () => {
+    const { data } = await API.get(
+      `${BASE_URL}/tv/airing_today?language=en-US&page=1`
+    );
+    return data;
+  },
 };
 
 const randomMovie = async () => {

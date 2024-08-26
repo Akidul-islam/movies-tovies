@@ -11,8 +11,7 @@ const MovieThumbail = ({
 }: {
   title: string;
   image: string;
-  release_date: string;
-
+    release_date: string;
   vote_average: number;
 }) => {
   return (
@@ -32,7 +31,7 @@ const MovieThumbail = ({
           {title.length > 18 ? `${title.substring(0, 16)}...` : title}
         </h4>
         <p className='flex justify-between items-center  text-sm opacity-80 font-mono font-[300] text-gray-50'>
-          {release_date.split('-')[0]}
+          { release_date.split('-')[0] }
           <span className='flex items-center gap-1 '>
             <Star size={14} fill='white' />
 
