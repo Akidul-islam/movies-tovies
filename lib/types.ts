@@ -9,6 +9,7 @@ interface MovieList {
 interface Movie {
   id?: number;
   original_title?: string;
+  original_name?: string;
   poster_path?: string;
   title?: string | undefined;
   overview?: string;

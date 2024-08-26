@@ -12,6 +12,15 @@ const moviesApi = createApi({
   reducerPath: 'moviesApi',
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
+    prepareHeaders: (headers) => {
+      const token = process.env.NEXT_PUBLIC_TMDB_ACCESS_TOKEN;
+      // If we have a token set in state, let's assume that we should be passing it.
+      if (token) {
+        headers.set('authorization', `Bearer ${token}`);
+      }
+
+      return headers;
+    },
   }),
   tagTypes: ['moviesApi'],
   endpoints: (build) => ({
@@ -31,7 +40,7 @@ const moviesApi = createApi({
     }),
 
     getMovies: build.query({
-      query: (endpoint) => `movie/${endpoint}?api_key=${API_KEY}`,
+      query: (endpoint) => `${endpoint}?api_key=${API_KEY}`,
     }),
 
     getMovie: build.query({
