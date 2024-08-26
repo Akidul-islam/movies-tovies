@@ -1,48 +1,50 @@
-'use client';
-import React, { useRef } from 'react';
-import { Movie, MovieList } from '@/lib/types';
-import { useGetMoviesQuery } from '@/redux/api/moviesApi';
-import Link from 'next/link';
-import MovieThumbail from './Thumbail';
-import { Button } from '../ui/button';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
-const MoiveList: React.FC<MovieList> = ({ title, endpoint }) => {
+"use client";
+import React, { useRef, useState } from "react";
+import { Movie, MovieList } from "@/lib/types";
+import { useGetMoviesQuery } from "@/redux/api/moviesApi";
+import Link from "next/link";
+import MovieThumbail from "./Thumbail";
+import { Button } from "../ui/button";
+import { ArrowLeft, ArrowRight } from "lucide-react";
+
+const MoiveList: React.FC<MovieList> = ({ title, url }) => {
+  const [format, setFormat] = useState("today");
+  const [type, setType] = useState("all");
   const scrollX = useRef(null);
   const clientWidth = useRef(null);
-  const { data } = useGetMoviesQuery(endpoint);
+  const { data } = useGetMoviesQuery(`${url}/${type}/${format}?language=en-US`);
   const scrollRight = () => {
     if (data) {
       scrollX.current.scrollBy({
         left: clientWidth.current.clientWidth * 5,
-        behavior: 'smooth',
+        behavior: "smooth",
       });
     }
-    // console.log();
   };
   const scrollleft = () => {
     if (data) {
       scrollX.current.scrollBy({
         left: -clientWidth.current.clientWidth * 5,
-        behavior: 'smooth',
+        behavior: "smooth",
       });
     }
   };
   return (
-    <section className='px-8 py-8 flex flex-col gap-6'>
-      <div className='flex justify-between items-center'>
-        <h1 className='font-poppins text-lg'>{title}</h1>
-        <div className='flex items-center gap-4'>
-          <button className='outline-none border-0 border-b-2 bg-transparent'>
+    <section className="px-8 py-8 flex flex-col gap-6">
+      <div className="flex justify-between items-center">
+        <h1 className="font-poppins text-lg">{title}</h1>
+        <div className="flex items-center gap-4">
+          <button className="outline-none border-0 border-b-2 bg-transparent">
             Movies
           </button>
-          <button className='outline-none border-0 border-b-2 bg-transparent'>
+          <button className="outline-none border-0 border-b-2 bg-transparent">
             Tv Series
           </button>
         </div>
       </div>
-      <div className='flex lg:gap-8'>
+      <div className="flex lg:gap-8">
         <div
-          className='flex gap-4 overflow-x-auto scrollbar-thin scrollbar-none scrollbar-track-green-400'
+          className="flex gap-4 overflow-x-auto scrollbar-thin scrollbar-none scrollbar-track-green-400"
           ref={scrollX}
         >
           {data &&
@@ -58,11 +60,17 @@ const MoiveList: React.FC<MovieList> = ({ title, endpoint }) => {
                 <div key={id} ref={clientWidth}>
                   <Link href={`/watch-movie/${original_title}-${id}`}>
                     <MovieThumbail
+<<<<<<< HEAD
                       title={`${
                         original_title ? original_title : original_name
                       }`}
                       image={poster_path ? poster_path : 'no-image'}
                       release_date={release_date ? release_date : 'unkown'}
+=======
+                      title={`${original_title}`}
+                      image={poster_path ? poster_path : "no-image"}
+                      release_date={release_date ? release_date : "unkown"}
+>>>>>>> b2b0a71350d73e2e1698c12df20af280fdec4751
                       vote_average={vote_average ? vote_average : 0}
                     />
                   </Link>
@@ -70,18 +78,18 @@ const MoiveList: React.FC<MovieList> = ({ title, endpoint }) => {
               )
             )}
         </div>
-        <div className='hidden lg:flex justify-between bg-primary-forground/90 flex-col'>
+        <div className="hidden lg:flex justify-between bg-primary-forground/90 flex-col">
           <Button
             onClick={scrollRight}
-            variant={'outline'}
-            className='h-[45%] duration-200 ease-in shadow-md backdrop:blur-[4px] bg-red-50/10 border-0 bg-gradient-to-tr w-[50px]   hover:from-red-300/60 hover:to-cyan-500/40 '
+            variant={"outline"}
+            className="h-[45%] duration-200 ease-in shadow-md backdrop:blur-[4px] bg-red-50/10 border-0 bg-gradient-to-tr w-[50px]   hover:from-red-300/60 hover:to-cyan-500/40 "
           >
             <ArrowRight />
           </Button>
           <Button
             onClick={scrollleft}
-            variant={'outline'}
-            className='h-[45%] shadow-md backdrop:blur-[4px] bg-red-50/10 border-0 bg-gradient-to-tr w-[50px] duration-1000 ease-in   hover:from-red-300/60 hover:to-cyan-500/40 '
+            variant={"outline"}
+            className="h-[45%] shadow-md backdrop:blur-[4px] bg-red-50/10 border-0 bg-gradient-to-tr w-[50px] duration-1000 ease-in   hover:from-red-300/60 hover:to-cyan-500/40 "
           >
             <ArrowLeft />
           </Button>
