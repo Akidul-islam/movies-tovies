@@ -9,26 +9,18 @@ const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 // endpoint variable
 
 const moviesApi = createApi({
-  reducerPath: "moviesApi",
+  reducerPath: 'moviesApi',
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
     prepareHeaders: (headers) => {
       const token = process.env.NEXT_PUBLIC_TMDB_ACCESS_TOKEN;
-<<<<<<< HEAD
-      // If we have a token set in state, let's assume that we should be passing it.
-      if (token) {
-        headers.set('authorization', `Bearer ${token}`);
+      if (!headers.has('Authorization') && token) {
+        headers.set('Authorization', `Bearer ${token}`);
       }
-
-=======
-      if (!headers.has("Authorization") && token) {
-        headers.set("Authorization", `Bearer ${token}`);
-      }
->>>>>>> b2b0a71350d73e2e1698c12df20af280fdec4751
       return headers;
     },
   }),
-  tagTypes: ["moviesApi"],
+  tagTypes: ['moviesApi'],
   endpoints: (build) => ({
     getGenres: build.query({
       query: () => `genre/movie/list?api_key=${API_KEY}`,
@@ -46,14 +38,7 @@ const moviesApi = createApi({
     }),
 
     getMovies: build.query({
-<<<<<<< HEAD
-      query: (endpoint) => `${endpoint}?api_key=${API_KEY}`,
-=======
-      query: (endpoint) => {
-        console.log(endpoint);
-        return `${endpoint}`;
-      },
->>>>>>> b2b0a71350d73e2e1698c12df20af280fdec4751
+      query: (url) => url,
     }),
 
     getMovie: build.query({

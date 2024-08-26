@@ -8,16 +8,16 @@ import { Button } from "../ui/button";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
 const MoiveList: React.FC<MovieList> = ({ title, url }) => {
-  const [format, setFormat] = useState("today");
-  const [type, setType] = useState("all");
+  const [format, setFormat] = useState('day');
+  const [type, setType] = useState('all');
   const scrollX = useRef(null);
   const clientWidth = useRef(null);
-  const { data } = useGetMoviesQuery(`${url}/${type}/${format}?language=en-US`);
+  const { data, isFetching } = useGetMoviesQuery(`${url}/${type}/${format}`);
   const scrollRight = () => {
     if (data) {
       scrollX.current.scrollBy({
         left: clientWidth.current.clientWidth * 5,
-        behavior: "smooth",
+        behavior: 'smooth',
       });
     }
   };
@@ -25,26 +25,60 @@ const MoiveList: React.FC<MovieList> = ({ title, url }) => {
     if (data) {
       scrollX.current.scrollBy({
         left: -clientWidth.current.clientWidth * 5,
-        behavior: "smooth",
+        behavior: 'smooth',
       });
     }
   };
+
+  const getText = (e: any) => {
+    const text = e.target.textContent.toLowerCase();
+    if (text == 'day' || text == 'week') setFormat(text);
+    if (text == 'movie' || text == 'tv') setType(text);
+  };
   return (
-    <section className="px-8 py-8 flex flex-col gap-6">
-      <div className="flex justify-between items-center">
-        <h1 className="font-poppins text-lg">{title}</h1>
-        <div className="flex items-center gap-4">
-          <button className="outline-none border-0 border-b-2 bg-transparent">
-            Movies
-          </button>
-          <button className="outline-none border-0 border-b-2 bg-transparent">
-            Tv Series
-          </button>
+    <section className='px-8 py-8 flex flex-col gap-6'>
+      <div className='flex justify-between items-center'>
+        <div className='flex items-center gap-4'>
+          <h1 className=' text-2xl tracking-wider opacity-90 inline-block border-l-2 border-red-500 pl-2 font-poppins'>
+            {title}
+          </h1>
+          <div className=' flex items-center gap-4 '>
+            <Button
+              variant={'outline'}
+              className='rounded-tl-[1rem] rounded-br-[1rem] h-8 shadow-[0 2px 5px bg-green-500]'
+              onClick={(e) => getText(e)}
+            >
+              DAY
+            </Button>
+            <Button
+              variant={'outline'}
+              className='rounded-tl-[1rem] rounded-br-[1rem] h-8 shadow-[0 2px 5px bg-green-500]'
+              onClick={(e) => getText(e)}
+            >
+              WEEK
+            </Button>
+          </div>
+        </div>
+        <div className='flex items-center gap-4'>
+          <Button
+            onClick={(e) => getText(e)}
+            className='outline-none border-0 border-b-2 bg-transparent'
+          >
+            Movie
+          </Button>
+          <Button
+            onClick={(e) => getText(e)}
+            className='outline-none border-0 border-b-2 bg-transparent'
+          >
+            TV
+          </Button>
         </div>
       </div>
-      <div className="flex lg:gap-8">
+      <div className='flex lg:gap-8'>
         <div
-          className="flex gap-4 overflow-x-auto scrollbar-thin scrollbar-none scrollbar-track-green-400"
+          className={`flex gap-4 overflow-x-auto  scrollbar-thin scrollbar-none scrollbar-track-green-400 duration-200 ease-in  ${
+            isFetching && 'opacity-0'
+          }`}
           ref={scrollX}
         >
           {data &&
@@ -52,44 +86,47 @@ const MoiveList: React.FC<MovieList> = ({ title, url }) => {
               ({
                 id,
                 original_title,
-                original_name,
+                name,
                 poster_path,
                 release_date,
+                first_air_date,
+                media_type,
                 vote_average,
               }: Movie) => (
                 <div key={id} ref={clientWidth}>
-                  <Link href={`/watch-movie/${original_title}-${id}`}>
+                  <Link
+                    href={`/watch-${media_type}/${
+                      media_type == 'movie' ? original_title : name
+                    }-${id}`}
+                  >
                     <MovieThumbail
-<<<<<<< HEAD
-                      title={`${
-                        original_title ? original_title : original_name
-                      }`}
+                      title={`${media_type == 'tv' ? name : original_title}`}
                       image={poster_path ? poster_path : 'no-image'}
-                      release_date={release_date ? release_date : 'unkown'}
-=======
-                      title={`${original_title}`}
-                      image={poster_path ? poster_path : "no-image"}
-                      release_date={release_date ? release_date : "unkown"}
->>>>>>> b2b0a71350d73e2e1698c12df20af280fdec4751
+                      release_date={
+                        media_type == 'tv' ? first_air_date : release_date
+                      }
                       vote_average={vote_average ? vote_average : 0}
                     />
                   </Link>
                 </div>
               )
             )}
+          <Button variant={'outline'} className='px-2 py-2'>
+            More
+          </Button>
         </div>
-        <div className="hidden lg:flex justify-between bg-primary-forground/90 flex-col">
+        <div className='hidden lg:flex justify-between bg-primary-forground/90 flex-col'>
           <Button
             onClick={scrollRight}
-            variant={"outline"}
-            className="h-[45%] duration-200 ease-in shadow-md backdrop:blur-[4px] bg-red-50/10 border-0 bg-gradient-to-tr w-[50px]   hover:from-red-300/60 hover:to-cyan-500/40 "
+            variant={'outline'}
+            className='h-[45%] duration-200 ease-in shadow-md backdrop:blur-[4px] bg-red-50/10 border-0 bg-gradient-to-tr w-[50px]   hover:from-red-300/60 hover:to-cyan-500/40 '
           >
             <ArrowRight />
           </Button>
           <Button
             onClick={scrollleft}
-            variant={"outline"}
-            className="h-[45%] shadow-md backdrop:blur-[4px] bg-red-50/10 border-0 bg-gradient-to-tr w-[50px] duration-1000 ease-in   hover:from-red-300/60 hover:to-cyan-500/40 "
+            variant={'outline'}
+            className='h-[45%] shadow-md backdrop:blur-[4px] bg-red-50/10 border-0 bg-gradient-to-tr w-[50px] duration-1000 ease-in   hover:from-red-300/60 hover:to-cyan-500/40 '
           >
             <ArrowLeft />
           </Button>
