@@ -20,5 +20,12 @@ interface Movie {
   vote_average?: number;
 }
 
+interface Thumbnails {
+  title: string;
+  image: string;
+  release_date: string;
+  vote_average: string;
+  mediaType: string;
+}
 
-export type { Genres, MovieList, Movie };
+export type { Genres, MovieList, Movie, Thumbnails };

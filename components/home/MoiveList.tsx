@@ -6,7 +6,7 @@ import Link from "next/link";
 import MovieThumbail from "./Thumbail";
 import { Button } from "../ui/button";
 import { ArrowLeft, ArrowRight, Navigation } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { useRouter } from "next/router";
 
 const MoiveList: React.FC<MovieList> = ({ title, url }) => {
   const [format, setFormat] = useState("day");
@@ -14,6 +14,7 @@ const MoiveList: React.FC<MovieList> = ({ title, url }) => {
   const scrollX = useRef(null);
   const clientWidth = useRef(null);
   const { data, isFetching } = useGetMoviesQuery(`${url}/${type}/${format}`);
+
   const scrollRight = () => {
     if (data) {
       scrollX.current.scrollBy({
@@ -22,6 +23,7 @@ const MoiveList: React.FC<MovieList> = ({ title, url }) => {
       });
     }
   };
+
   const scrollleft = () => {
     if (data) {
       scrollX.current.scrollBy({
@@ -36,6 +38,7 @@ const MoiveList: React.FC<MovieList> = ({ title, url }) => {
     if (text == "day" || text == "week") setFormat(text);
     if (text == "movie" || text == "tv") setType(text);
   };
+
   return (
     <section className="px-8 py-8 flex flex-col gap-6">
       <div className="flex justify-between items-center">
@@ -96,7 +99,7 @@ const MoiveList: React.FC<MovieList> = ({ title, url }) => {
               }: Movie) => (
                 <div key={id} ref={clientWidth}>
                   <Link
-                    href={`/watch-${media_type}/${
+                    href={`${media_type}/${
                       media_type == "movie" ? original_title : name
                     }-${id}`}
                   >
@@ -106,6 +109,7 @@ const MoiveList: React.FC<MovieList> = ({ title, url }) => {
                       release_date={
                         media_type == "tv" ? first_air_date : release_date
                       }
+                      mediaType={media_type}
                       vote_average={vote_average ? vote_average : 0}
                     />
                   </Link>
