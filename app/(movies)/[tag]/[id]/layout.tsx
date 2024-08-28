@@ -6,6 +6,6 @@ const MovieLayout = ({
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
-  return <section className="px-8">{children}</section>;
+  return <section className="">{children}</section>;
 };
 export default MovieLayout;
