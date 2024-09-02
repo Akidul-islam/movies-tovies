@@ -34,6 +34,10 @@ const apiEndpoint = {
     const res = await API.get(url);
     return res.data;
   },
+  credits: async (mediaType: string, id: string) => {
+    const res = await API.get(`${mediaType}/${id}/credits`);
+    return res.data;
+  },
 };
 
 const randomMovie = async () => {

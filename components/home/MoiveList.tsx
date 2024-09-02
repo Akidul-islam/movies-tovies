@@ -6,7 +6,6 @@ import Link from "next/link";
 import MovieThumbail from "./Thumbail";
 import { Button } from "../ui/button";
 import { ArrowLeft, ArrowRight, Navigation } from "lucide-react";
-import { useRouter } from "next/router";
 
 const MoiveList: React.FC<MovieList> = ({ title, url }) => {
   const [format, setFormat] = useState("day");
