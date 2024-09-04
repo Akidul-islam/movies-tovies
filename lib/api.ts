@@ -29,13 +29,19 @@ const apiEndpoint = {
     return data;
   },
   mediaTypeDetails: async (id: string, mediaType: string) => {
-    const url =
-      mediaType == "movie" ? `${BASE_URL}/movie/${id}` : `${BASE_URL}/tv/${id}`;
-    const res = await API.get(url);
+    const res = await API.get(`${BASE_URL}/${mediaType}/${id}`);
     return res.data;
   },
-  credits: async (mediaType: string, id: string) => {
-    const res = await API.get(`${mediaType}/${id}/credits`);
+  additionlDetails: async ({
+    mediaType,
+    id,
+    keyword,
+  }: {
+    mediaType: string;
+    id: string;
+    keyword: string;
+  }) => {
+    const res = await API.get(`${mediaType}/${id}/${keyword}`);
     return res.data;
   },
 };

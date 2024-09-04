@@ -1,7 +1,9 @@
 import { Credits } from "@/components/home/Credits";
+import MovieThumbail from "@/components/home/Thumbail";
 import { Button } from "@/components/ui/button";
 import { ImageColorExtractor } from "@/components/ui/color-extractor";
 import { IMG_BASE_URL, apiEndpoint } from "@/lib/api";
+import { CREDITS_URL, RECOMMENDATION_URL } from "@/redux/api/endpoint";
 import { Play, Heart } from "lucide-react";
 import Image from "next/image";
 
@@ -10,17 +12,24 @@ const MediaDetails = async ({
 }: {
   params: { id: string; tag: string };
 }) => {
-  const id = params.id.split("-");
+  const convertArr = params.id.split("-");
+  const id = convertArr[convertArr.length - 1];
+
   const tv = params.tag;
-  const data = await apiEndpoint.mediaTypeDetails(
-    id[id.length - 1],
-    params.tag
-  );
-  const credits = await apiEndpoint.credits(tv, id[id.length - 1]);
+  const [data, credits, relatedMovies] = await Promise.all([
+    apiEndpoint.mediaTypeDetails(id, tv),
+    apiEndpoint.additionlDetails({ mediaType: tv, id, keyword: CREDITS_URL }),
+    apiEndpoint.additionlDetails({
+      mediaType: tv,
+      id,
+      keyword: RECOMMENDATION_URL,
+    }),
+  ]);
   const year =
     tv == "tv"
       ? data.first_air_date.split("-")[0]
       : data.release_date.split("-")[0];
+  console.log(relatedMovies);
   return (
     <section className=" py-2">
       <ImageColorExtractor
@@ -41,7 +50,7 @@ const MediaDetails = async ({
           </div>
           <div className="w-full flex flex-col leading-2 gap-4 md:w-2/3">
             <h1 className="text-3xl font-bold  mb-4">
-              {tv == "tv" ? data.original_name : data.original_name}
+              {tv == "tv" ? data.original_name : data.original_title}
               <span className="opacity-80 ml-2 font-medium">({year})</span>
             </h1>
             <div className="flex items-center gap-2">
@@ -82,6 +91,9 @@ const MediaDetails = async ({
         </div>
       </ImageColorExtractor>
       <Credits {...credits} />
+      <section>
+        <div>{/* <MovieThumbail  /> */}</div>
+      </section>
     </section>
   );
 };

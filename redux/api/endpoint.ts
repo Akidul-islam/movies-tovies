@@ -5,4 +5,13 @@ const TOP_RATED = "top_rated";
 const UPCOMING = "upcoming";
 const TRENDING_URL = "trending";
 const CREDITS_URL = "credits";
-export { NOW_PLAYING, POPULAR, TOP_RATED, UPCOMING, TRENDING_URL, CREDITS_URL };
+const RECOMMENDATION_URL = "recommendations";
+export {
+  NOW_PLAYING,
+  POPULAR,
+  TOP_RATED,
+  UPCOMING,
+  TRENDING_URL,
+  CREDITS_URL,
+  RECOMMENDATION_URL,
+};
