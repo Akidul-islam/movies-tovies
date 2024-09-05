@@ -1,6 +1,6 @@
-'use client'; // This is necessary for Client Components in the App Router
+"use client"; // This is necessary for Client Components in the App Router
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from "react";
 
 export const ImageColorExtractor = ({
   imageUrl,
@@ -14,11 +14,11 @@ export const ImageColorExtractor = ({
 
   useEffect(() => {
     const img = new Image();
-    img.crossOrigin = 'Anonymous'; // Handle CORS for external images
+    img.crossOrigin = "Anonymous"; // Handle CORS for external images
 
     img.onload = () => {
       const canvas = canvasRef.current;
-      const ctx = canvas.getContext('2d');
+      const ctx = canvas.getContext("2d");
 
       canvas.width = img.width;
       canvas.height = img.height;
@@ -41,13 +41,13 @@ export const ImageColorExtractor = ({
     <div
       style={{
         background: `url(${imageUrl})`,
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: '30%',
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "30%",
       }}
-      className={`h-[80vh]  overflow-hidden relative before:content-[' '] before:absolute before:w-full before:h-full  before:bg-gray-900/40 -z-[1] `}
+      className={`overflow-hidden z-10 relative before:content-[' '] before:absolute before:w-full before:h-[150%] before:bg-gradient-to-tr before:bg-green-300/10 before:from-green-900/80 before:to-gray-900 before:blur-[80px] before:-z-[1] `}
     >
-      <canvas ref={canvasRef} style={{ display: 'none' }} />
+      <canvas ref={canvasRef} style={{ display: "none" }} />
       {children}
     </div>
   );

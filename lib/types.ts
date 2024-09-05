@@ -30,4 +30,36 @@ interface Thumbnails {
   mediaType: string;
 }
 
-export type { Genres, MovieList, Movie, Thumbnails };
+interface Credit {
+  id: number;
+  cast: CastList[];
+  crew: CrewList[];
+}
+
+interface CastList {
+  id: number;
+  name: string;
+  original_name?: string;
+  profile_path: string;
+  cast_id?: number;
+  character: string;
+  known_for_department: string;
+}
+
+interface CrewList {
+  id: number;
+  name: string;
+  profile_path: string;
+  character: string;
+  department: string;
+}
+
+export type {
+  Genres,
+  MovieList,
+  Movie,
+  Thumbnails,
+  CastList,
+  CrewList,
+  Credit,
+};
