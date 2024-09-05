@@ -2,14 +2,14 @@ import Banner from "@/components/home/Banner";
 import MoiveList from "@/components/home/MoiveList";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { TRENDING_URL, UPCOMING } from "@/redux/api/endpoint";
-import { Facebook, Navigation, TableCellsMerge, Twitter } from "lucide-react";
+import { POPULAR, TRENDING_URL, UPCOMING } from '@/redux/api/endpoint';
+import { Facebook, Navigation, TableCellsMerge, Twitter } from 'lucide-react';
 
 export default function Home() {
   return (
-    <main className=''>
+    <main className='flex flex-col'>
       <Banner />
-      <MoiveList title='Trending' url={TRENDING_URL} />
+      <MoiveList title='Trending' url={TRENDING_URL} keys='trending' />
       <div className='flex items-center gap-4 px-8'>
         <div className='flex items-center gap-4'>
           <Avatar>
@@ -43,6 +43,7 @@ export default function Home() {
           </Button>
         </div>
       </div>
+      <MoiveList title='What is Populars' url={POPULAR} keys='popular' />
     </main>
   );
 }

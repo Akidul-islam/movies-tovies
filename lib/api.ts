@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 // env data
 const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -11,7 +11,7 @@ const ACCESS_TOKEN = process.env.NEXT_PUBLIC_TMDB_ACCESS_TOKEN;
 const API = axios.create({
   baseURL: BASE_URL,
   headers: {
-    accept: 'application/json',
+    accept: "application/json",
     Authorization: `Bearer ${ACCESS_TOKEN}`,
   },
 });
@@ -19,7 +19,7 @@ const API = axios.create({
 const apiEndpoint = {
   getMovieVideo: async (movie_id: number) => {
     const { data } = await API.get(`${BASE_URL}/movie/${movie_id}/videos`);
-    const trailer = data.results.find((item: any) => item.type == 'Trailer');
+    const trailer = data.results.find((item: any) => item.type == "Trailer");
     return trailer;
   },
   getTv: async () => {
@@ -27,6 +27,22 @@ const apiEndpoint = {
       `${BASE_URL}/tv/airing_today?language=en-US&page=1`
     );
     return data;
+  },
+  mediaTypeDetails: async (id: string, mediaType: string) => {
+    const res = await API.get(`${BASE_URL}/${mediaType}/${id}`);
+    return res.data;
+  },
+  additionlDetails: async ({
+    mediaType,
+    id,
+    keyword,
+  }: {
+    mediaType: string;
+    id: string;
+    keyword: string;
+  }) => {
+    const res = await API.get(`${mediaType}/${id}/${keyword}`);
+    return res.data;
   },
 };
 
