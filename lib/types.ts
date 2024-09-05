@@ -5,10 +5,12 @@ interface Genres {
 interface MovieList {
   title: string;
   url: string;
+  keys?: string;
 }
 interface Movie {
   id?: number;
   original_title?: string;
+  original_name?: string;
   name?: string;
   first_air_date?: string;
   media_type?: string;
@@ -23,8 +25,8 @@ interface Movie {
 interface Thumbnails {
   title: string;
   image: string;
-  release_date: string;
-  vote_average: string;
+  release_date?: string;
+  vote_average: number;
   mediaType: string;
 }
 
