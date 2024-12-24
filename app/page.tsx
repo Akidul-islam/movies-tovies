@@ -2,7 +2,7 @@ import Banner from "@/components/home/Banner";
 import MoiveList from "@/components/home/MoiveList";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { POPULAR, TRENDING_URL, UPCOMING } from '@/redux/api/endpoint';
+import { POPULAR_URL, TRENDING_URL, UPCOMING } from '@/redux/api/endpoint';
 import { Facebook, Navigation, TableCellsMerge, Twitter } from 'lucide-react';
 
 export default function Home() {
@@ -43,7 +43,7 @@ export default function Home() {
           </Button>
         </div>
       </div>
-      <MoiveList title='What is Populars' url={POPULAR} keys='popular' />
+      <MoiveList title='What is Populars' url={POPULAR_URL} keys='popular' />
     </main>
   );
 }

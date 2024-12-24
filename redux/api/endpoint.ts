@@ -1,6 +1,6 @@
 // movies Routes
 const NOW_PLAYING = "now_playing";
-const POPULAR = "popular";
+const POPULAR_URL = "popular";
 const TOP_RATED = "top_rated";
 const UPCOMING = "upcoming";
 const TRENDING_URL = "trending";
@@ -9,7 +9,7 @@ const RECOMMENDATION_URL = "recommendations";
 const PROMOTION_VIDEOS_URL = 'videos';
 export {
   NOW_PLAYING,
-  POPULAR,
+  POPULAR_URL,
   TOP_RATED,
   UPCOMING,
   TRENDING_URL,

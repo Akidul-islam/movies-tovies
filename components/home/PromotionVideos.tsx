@@ -1,5 +1,6 @@
 import { apiEndpoint } from '@/lib/api';
 import { PROMOTION_VIDEOS_URL } from '@/redux/api/endpoint';
+import { HorizontalScrollbar } from '../ui/horizontal-scrolling';
 
 const PromotionVideos = async ({
   id,
@@ -13,27 +14,30 @@ const PromotionVideos = async ({
     id,
     keyword: PROMOTION_VIDEOS_URL,
   });
-
-  return (
-    <section className='mt-8'>
+  if (videos?.results.length == 0) return; 
+    return (
+    <section className='px-8'>
       <h2 className='text-2xl font-bold mb-4'>Promotion Videos</h2>
-      <div className='flex flex-col md:flex-row gap-4'>
-        {videos.results.map(
+
+        {/* {videos.results.map(
           (video: { id: string; key: string; name: string; site: string }) => (
-            <div key={video.id} className='w-full md:w-1/3'>
-              <iframe
+            <div key={video.id} className='  shadow-sm  shadow-red-500/30 rounded'>
+              <div className='w-[300px] overflow-hidden rounded'>
+                <iframe
                 width='100%'
                 height='200'
                 src={`https://www.youtube.com/embed/${video.key}`}
                 title={video.name}
                 allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
                 allowFullScreen
+                aria-controls='controls'
               />
               <p className='text-center mt-2'>{video.name}</p>
+              </div>
             </div>
           )
-        )}
-      </div>
+        )} */}
+   <HorizontalScrollbar videos={ videos.results} />
     </section>
   );
 };

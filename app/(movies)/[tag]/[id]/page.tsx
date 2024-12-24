@@ -4,6 +4,8 @@ import { IMG_BASE_URL, apiEndpoint } from '@/lib/api';
 import { Play, Heart } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
+import Link from 'next/link';
+import { Suspense } from 'react';
 const PromotionVideos = dynamic(
   () => import('@/components/home/PromotionVideos')
 );
@@ -16,10 +18,8 @@ const MediaDetails = async ({
 }) => {
   const convertArr = params.id.split('-');
   const id = convertArr[convertArr.length - 1];
-
   const tv = params.tag;
   const data = await apiEndpoint.mediaTypeDetails(id, tv);
-
   const year =
     tv == 'tv'
       ? data.first_air_date.split('-')[0]
@@ -69,9 +69,16 @@ const MediaDetails = async ({
                 }
               </div>
               <div className='flex items-center gap-4'>
-                <Button className='bg-red-800 opacity-90 h-[40px]  hover:opacity-100 flex items-center gap-2'>
-                  <Play size={18} strokeWidth={3} /> Watch
-                </Button>
+                <Link
+                  href={`/watch/${
+                    tv == 'tv' ? data.original_name : data.original_title
+                  }-${id}`}
+                >
+                  <Button className='bg-red-800 opacity-90 h-[40px]  hover:opacity-100 flex items-center gap-2'>
+                    <Play size={18} strokeWidth={3} /> Watch
+                  </Button>
+                </Link>
+
                 <Button className='bg-green-100 text-gray-900 opacity-90 h-[40px] hover:opacity-100 flex items-center gap-2'>
                   <Heart size={18} color='black' strokeWidth={3} /> Wishlist
                 </Button>
@@ -86,8 +93,41 @@ const MediaDetails = async ({
           </div>
         </ImageColorExtractor>
       </section>
-      <PromotionVideos mediaType={tv} id={id} />
-      <RelatedMedia mediaType={tv} id={id} />
+      <Suspense fallback={<h2 className='bg-red-400'>Video is loading</h2>}>
+        <PromotionVideos mediaType={tv} id={id} />
+      </Suspense>
+      <Suspense fallback={<h2>related media is loading</h2>}>
+        <RelatedMedia mediaType={tv} id={id} />
+      </Suspense>
+      <section className='px-8 py-4 bg-white'>
+        <div className='flex items-center gap-8 '>
+          {data.production_companies.map(
+            ({
+              id,
+              logo_path,
+              name,
+            }: {
+              id: number;
+              logo_path: string;
+              name: string;
+            }) => (
+              <article key={id} className=' py-4'>
+                <div className=''>
+                  <Image
+                    loading='lazy'
+                    src={`${IMG_BASE_URL}${logo_path}`}
+                    alt={name ? name : 'no-image'}
+                    width={150}
+                    height={0}
+                    objectFit='cover'
+                    className=''
+                  />
+                </div>
+              </article>
+            )
+          )}
+        </div>
+      </section>
     </>
   );
 };

@@ -5,9 +5,10 @@ interface Genres {
 interface MovieList {
   title: string;
   url: string;
-  keys?: string;
+  keys: 'trending' | 'popular';
 }
 interface Movie {
+  map(arg0: ({ id, original_title, poster_path, release_date, first_air_date, vote_average, original_name, }: Movie) => import("react").JSX.Element): import("react").ReactNode;
   id?: number;
   original_title?: string;
   original_name?: string;

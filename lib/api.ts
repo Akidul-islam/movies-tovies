@@ -42,8 +42,12 @@ const apiEndpoint = {
     id: string;
     keyword: string;
   }) => {
-    const res = await API.get(`${mediaType}/${id}/${keyword}`);
-    return res.data;
+    const { data } = await API.get(`${mediaType}/${id}/${keyword}`);
+    if (data.results.length == 0) {
+      const { data } = await API.get(`${mediaType}/${id}/similar`);
+      return data;
+    }
+    return data;
   },
 };
 

@@ -7,7 +7,7 @@ import { Movie } from '@/lib/types';
 const IMG_BASE_URL = process.env.NEXT_PUBLIC_TMDB_IMAGE_URL;
 
 const Banner = () => {
-  const [movie, setMovie] = useState<Movie>({});
+  const [movie, setMovie] = useState<Movie>();
   useEffect(() => {
     let id: any;
     (async function () {

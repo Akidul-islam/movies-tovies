@@ -13,7 +13,7 @@ const MovieThumbail: FC<Thumbnails> = ({
   mediaType,
 }) => {
   return (
-    <article className='shadow-md shadow-green-500/30 hover:shadow-red-300/40  w-[180px] rounded-md'>
+    <article className='shadow-md shadow-red-500/30 hover:shadow-red-300/40  w-[180px] rounded-md'>
       <div className=' overflow-hidden h-[250px]  rounded-md'>
         <Image
           src={`${IMG_BASE_URL}${image}`}
