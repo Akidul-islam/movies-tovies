@@ -1,14 +1,6 @@
 'use client';
-
 import { useState } from 'react';
-import {
-  ArrowBigLeft,
-  ArrowRight,
-  ChevronRight,
-  SlidersHorizontal,
-} from 'lucide-react';
-import { DropdownMenu, DropdownMenuContent } from '@radix-ui/react-dropdown-menu';
-import { DropdownMenuTrigger } from '../ui/dropdown-menu';
+
 import { Select, SelectContent, SelectItem } from '../ui/select';
 import { SelectTrigger, SelectValue } from '../ui/select';
 import { Checkbox } from '../ui/checkbox';
