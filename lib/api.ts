@@ -19,7 +19,7 @@ const API = axios.create({
 const apiEndpoint = {
   getMovieVideo: async (movie_id: number) => {
     const { data } = await API.get(`${BASE_URL}/movie/${movie_id}/videos`);
-    const trailer = data.results.find((item: any) => item.type == "Trailer");
+    const trailer = data.results.find((item: any) => item.type == 'Trailer');
     return trailer;
   },
   getTv: async () => {
@@ -29,10 +29,11 @@ const apiEndpoint = {
     return data;
   },
   mediaTypeDetails: async (id: string, mediaType: string) => {
-    const res = await API.get(`${BASE_URL}/${mediaType}/${id}`);
+    const res = await API.get(`${mediaType}/${id}`);
     return res.data;
   },
-  additionlDetails: async ({
+  
+  getAdditionlDetails: async ({
     mediaType,
     id,
     keyword,
@@ -41,8 +42,12 @@ const apiEndpoint = {
     id: string;
     keyword: string;
   }) => {
-    const res = await API.get(`${mediaType}/${id}/${keyword}`);
-    return res.data;
+    const { data } = await API.get(`${mediaType}/${id}/${keyword}`);
+    if (data.results.length == 0) {
+      const { data } = await API.get(`${mediaType}/${id}/similar`);
+      return data;
+    }
+    return data;
   },
 };
 

@@ -11,6 +11,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
+  NavigationMenuViewport,
 } from '@/components/ui/navigation-menu';
 import { useGetGenresQuery } from '@/redux/api/moviesApi';
 import { Genres } from '@/lib/types';
@@ -57,10 +58,27 @@ export function NavigationBar() {
             </NavigationMenuContent>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <Link href={'/'}>Movies</Link>
+            <NavigationMenuTrigger>Movies</NavigationMenuTrigger>
+            <NavigationMenuContent className=''>
+              <ul className='grid w-[200px] gap-3 p-4 bg-background'>
+                {['Popular', 'Now Playing', 'Upcoming', 'Top Rated'].map(
+                  (item) => (
+                    <ListItem
+                      key={item}
+                      title={item}
+                      href={`/${
+                        item == 'Popular'
+                          ? 'movie'
+                          : item.toLowerCase().replace(' ', '-')
+                      }`}
+                    />
+                  )
+                )}
+              </ul>
+            </NavigationMenuContent>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <Link href={'/'}>TV Show</Link>
+            <NavigationMenuTrigger>Tv Show</NavigationMenuTrigger>
           </NavigationMenuItem>
         </NavigationMenuList>
         <NavigationMenuList className='gap-4'>
